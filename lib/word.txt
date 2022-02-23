@@ -1,0 +1,3 @@
+Pomodoro: イタリア語でトマト
+concentration: 集中
+rest: 休憩
