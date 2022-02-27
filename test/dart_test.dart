@@ -69,4 +69,6 @@ b
     var str7 = r'a\nb';
     print(str7); // 「a\nb」と改行されずに表示される
   });
+
+  test('equal', () {});
 }

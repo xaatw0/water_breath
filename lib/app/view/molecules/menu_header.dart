@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../../functions.dart';
+
 class MenuHeader extends StatelessWidget {
   const MenuHeader({
+    required this.onSetting,
+    required this.onBack,
     Key? key,
   }) : super(key: key);
 
   static const sizeIcon = 64.0;
+
+  final Function onSetting;
+  final Function onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +20,9 @@ class MenuHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            onBack();
+          },
           icon: Icon(
             Icons.arrow_back,
             size: sizeIcon,
@@ -21,7 +30,9 @@ class MenuHeader extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            onSetting();
+          },
           icon: Icon(
             Icons.settings,
             size: sizeIcon,

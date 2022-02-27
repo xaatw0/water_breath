@@ -13,8 +13,18 @@ class Time {
 
   Time.minutes(int minutes) : this(minutes * 60 * 100);
 
-  int get minutePart => (value / 100 / 60).floor();
-  int get secondPart => (value / 100 % 60).floor();
+  int get minutePart {
+    int second = (value / 100 % 60).ceil();
+    int minutes = ((value / 100) / 60).floor();
+    return minutes + (second == 60 ? 1 : 0);
+  }
+
+  int get secondPart {
+    int second = (value / 100 % 60).ceil();
+    return second == 60 ? 0 : second;
+  }
+
+  int get inSecond => (value / 100).floor();
   int call() => value;
   String get secondPartStr => secondPart.toString().padLeft(2, '0');
 

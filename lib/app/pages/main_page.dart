@@ -1,6 +1,8 @@
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:water_breath/app/pages/router.dart';
+import 'package:water_breath/app/workers/life_cycle.dart';
 
 import '../view/atoms/black_filter.dart';
 import '../view/molecules/play_pause_button.dart';
@@ -9,9 +11,11 @@ import '../view/molecules/timer_circle.dart';
 import '../view/molecules/menu_header.dart';
 import '../view/organisms/pomodoro_timer.dart';
 import '../view_model/main_page_vm.dart';
+import 'router.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({Key? key, required this.title}) : super(key: key);
+  static const id = '/';
 
   final String title;
 
@@ -20,7 +24,7 @@ class MainPage extends ConsumerStatefulWidget {
 }
 
 class _MainPageState extends ConsumerState<MainPage>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, RouteAware {
   late final double radius;
 
   late final MainPageVM _vm;
@@ -34,6 +38,7 @@ class _MainPageState extends ConsumerState<MainPage>
       _vm.onDisplayUpdated(DateTime.now());
     });
     _ticker.start();
+    WidgetsBinding.instance!.addObserver(_vm.lifeCycle);
   }
 
   @override
@@ -49,7 +54,10 @@ class _MainPageState extends ConsumerState<MainPage>
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 32, 0),
-                  child: MenuHeader(),
+                  child: MenuHeader(
+                    onSetting: () => _vm.onSetting(context),
+                    onBack: () => _vm.onBack(context),
+                  ),
                 ),
                 SizedBox(height: 32.0),
                 PomodoroTimer(
@@ -83,6 +91,8 @@ class _MainPageState extends ConsumerState<MainPage>
   @override
   void dispose() {
     _ticker.dispose();
+    _vm.dispose();
+    WidgetsBinding.instance!.removeObserver(_vm.lifeCycle);
     super.dispose();
   }
 

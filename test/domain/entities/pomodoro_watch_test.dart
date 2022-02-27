@@ -86,7 +86,7 @@ void main() {
     DateTime dateTime5 = DateTime(2022, 1, 1, 0, 26, 0);
     target.onTimer(dateTime5);
     expect(target.isPlaying, true);
-    expect(target.mode, PomodoroMode.breakTime);
+    expect(target.mode, PomodoroMode.restTime);
     expect(target.startTime!.startTime, dateTime5);
     expect(target.timerEntity.total, Time(5 * 60 * 100));
     expect(target.timerEntity.restTime, Time(5 * 60 * 100));
@@ -98,7 +98,7 @@ void main() {
     DateTime dateTime6 = DateTime(2022, 1, 1, 0, 30, 0);
     target.onTimer(dateTime6);
     expect(target.isPlaying, true);
-    expect(target.mode, PomodoroMode.breakTime);
+    expect(target.mode, PomodoroMode.restTime);
     expect(target.startTime!.startTime, dateTime5);
     expect(target.timerEntity.total, Time(5 * 60 * 100));
     expect(target.timerEntity.restTime, Time(1 * 60 * 100));

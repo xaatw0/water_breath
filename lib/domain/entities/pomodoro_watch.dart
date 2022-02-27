@@ -5,7 +5,7 @@ import 'package:water_breath/domain/entities/timer_entity.dart';
 import '../value_objects/start_time.dart';
 import '../value_objects/time.dart';
 
-enum PomodoroMode { concentration, breakTime }
+enum PomodoroMode { concentration, restTime }
 
 class PomodoroWatch {
   TimerEntity _timerEntity;
@@ -59,6 +59,18 @@ class PomodoroWatch {
     );
   }
 
+  void resume(PomodoroMode modeWhenResume, StartTime startTime) {
+    _startTime = startTime;
+
+    if (mode != modeWhenResume) {
+      mode = modeWhenResume;
+      _timerEntity = _timerEntity.copyWith(
+          total: mode == PomodoroMode.concentration
+              ? pomodoroStatus.concentrationTime
+              : pomodoroStatus.restTime);
+    }
+  }
+
   void addChangeModeEvent(OnModeChange event) {
     onModeChange.add(event);
   }
@@ -66,9 +78,9 @@ class PomodoroWatch {
   void changeMode() {
     Time total = Time(0);
     if (mode == PomodoroMode.concentration) {
-      mode = PomodoroMode.breakTime;
+      mode = PomodoroMode.restTime;
       total = pomodoroStatus.restTime;
-    } else if (mode == PomodoroMode.breakTime) {
+    } else if (mode == PomodoroMode.restTime) {
       mode = PomodoroMode.concentration;
       total = pomodoroStatus.concentrationTime;
     } else {

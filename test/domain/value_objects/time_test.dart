@@ -22,7 +22,7 @@ void main() {
     var target = Time(50);
     expect(target.value, 50);
     expect(target(), 50);
-    expect(target.secondPart, 0);
+    expect(target.secondPart, 1);
     expect(target.minutePart, 0);
   });
 
@@ -32,5 +32,47 @@ void main() {
     expect(target(), 15000);
     expect(target.secondPart, 30);
     expect(target.minutePart, 2);
+  });
+
+  test('1分00秒', () async {
+    var target = Time(60 * 100);
+    expect(target.secondPart, 0);
+    expect(target.minutePart, 1);
+  });
+  test('0分59.9秒', () async {
+    var target = Time(5990);
+    expect(target.secondPart, 0);
+    expect(target.minutePart, 1);
+  });
+  test('0分59.1秒', () async {
+    var target = Time(5910);
+    expect(target.secondPart, 0);
+    expect(target.minutePart, 1);
+  });
+  test('0分59.0秒', () async {
+    var target = Time(5900);
+    expect(target.secondPart, 59);
+    expect(target.minutePart, 0);
+  });
+
+  test('2分00秒', () async {
+    var target = Time(120 * 100);
+    expect(target.secondPart, 0);
+    expect(target.minutePart, 2);
+  });
+  test('1分59.9秒', () async {
+    var target = Time(6000 + 5990);
+    expect(target.secondPart, 0);
+    expect(target.minutePart, 2);
+  });
+  test('1分59.1秒', () async {
+    var target = Time(6000 + 5910);
+    expect(target.secondPart, 0);
+    expect(target.minutePart, 2);
+  });
+  test('1分59.0秒', () async {
+    var target = Time(6000 + 5900);
+    expect(target.secondPart, 59);
+    expect(target.minutePart, 1);
   });
 }
