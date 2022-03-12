@@ -1,17 +1,14 @@
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:water_breath/app/pages/router.dart';
-import 'package:water_breath/app/workers/life_cycle.dart';
 
 import '../view/atoms/black_filter.dart';
+import '../view/atoms/gap.dart';
 import '../view/molecules/play_pause_button.dart';
 import '../view/molecules/background_image.dart';
-import '../view/molecules/timer_circle.dart';
 import '../view/molecules/menu_header.dart';
 import '../view/organisms/pomodoro_timer.dart';
 import '../view_model/main_page_vm.dart';
-import 'router.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({Key? key, required this.title}) : super(key: key);
@@ -59,12 +56,12 @@ class _MainPageState extends ConsumerState<MainPage>
                     onBack: () => _vm.onBack(context),
                   ),
                 ),
-                SizedBox(height: 32.0),
+                Gap.h32,
                 PomodoroTimer(
                   radius,
                   _vm.timer,
                 ),
-                SizedBox(height: 64),
+                Gap.h64,
                 PlayPauseButton(
                   onPlayPauseTapped: onPlayPauseTapped,
                 ),

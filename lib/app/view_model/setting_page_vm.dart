@@ -26,6 +26,10 @@ class SettingPageVM {
 
   void setRef(WidgetRef ref) {
     _ref = ref;
+
+    PomodoroStatusStorage().load().then((value) {
+      _ref.read(_provider.notifier).update((state) => value);
+    });
   }
 
   int initialIndex(PomodoroMode mode) {

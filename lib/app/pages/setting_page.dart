@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:water_breath/app/view_model/setting_page_vm.dart';
 import 'package:water_breath/domain/entities/pomodoro_status.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,7 +30,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('設定'),
+        title: Text(AppLocalizations.of(context).setting), //'設定'),
       ),
       body: Padding(
         padding: EdgeInsets.all(64),
@@ -37,7 +38,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
           child: Column(
             children: [
               Text(
-                '集中時間',
+                AppLocalizations.of(context).concentrationTime, //'集中時間',
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               TextButton(
@@ -49,7 +50,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 ),
               ),
               Text(
-                '休憩時間',
+                AppLocalizations.of(context).breakTime, //'休憩時間',
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               TextButton(
@@ -60,7 +61,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               ),
               OutlinedButton.icon(
                 onPressed: () => _vm.onUpdate(context),
-                label: Text('反映'),
+                label: Text(AppLocalizations.of(context).ok), //'反映'),
                 icon: Icon(
                   Icons.check,
                   size: 48,
