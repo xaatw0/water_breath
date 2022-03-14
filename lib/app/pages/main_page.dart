@@ -1,7 +1,9 @@
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:water_breath/app/view/molecules/admob_banner.dart';
 
+import '../helpers/admob_info.dart';
 import '../view/atoms/black_filter.dart';
 import '../view/atoms/gap.dart';
 import '../view/molecules/play_pause_button.dart';
@@ -26,6 +28,10 @@ class _MainPageState extends ConsumerState<MainPage>
 
   late final MainPageVM _vm;
   late final Ticker _ticker;
+
+  final AdmobBanner _admobBanner = AdmobBanner(
+    AdmobInfoAndroidDemo().getBanner()..load(),
+  );
 
   @override
   void initState() {
@@ -61,10 +67,12 @@ class _MainPageState extends ConsumerState<MainPage>
                   radius,
                   _vm.timer,
                 ),
-                Gap.h64,
+                Expanded(child: Container()),
                 PlayPauseButton(
                   onPlayPauseTapped: onPlayPauseTapped,
                 ),
+                Expanded(child: Container()),
+                AdmobBanner(_admobBanner.bannerAd),
               ],
             ),
           ),
