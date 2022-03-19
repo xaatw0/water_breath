@@ -1,7 +1,11 @@
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:water_breath/app/view/molecules/admob_banner.dart';
 
+import '../helpers/admob_info.dart';
+import '../helpers/app_open_ad_manager.dart';
 import '../view/atoms/black_filter.dart';
 import '../view/atoms/gap.dart';
 import '../view/molecules/play_pause_button.dart';
@@ -31,7 +35,7 @@ class _MainPageState extends ConsumerState<MainPage>
   void initState() {
     super.initState();
     _vm = MainPageVM();
-    _ticker = this.createTicker((elapsed) {
+    _ticker = createTicker((elapsed) {
       _vm.onDisplayUpdated(DateTime.now());
     });
     _ticker.start();
@@ -50,7 +54,7 @@ class _MainPageState extends ConsumerState<MainPage>
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 32, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 32, 0),
                   child: MenuHeader(
                     onSetting: () => _vm.onSetting(context),
                     onBack: () => _vm.onBack(context),
@@ -61,10 +65,16 @@ class _MainPageState extends ConsumerState<MainPage>
                   radius,
                   _vm.timer,
                 ),
-                Gap.h64,
+                Expanded(child: Container()),
                 PlayPauseButton(
                   onPlayPauseTapped: onPlayPauseTapped,
                 ),
+                Expanded(child: Container()),
+                _vm.admobBanner(context).when(
+                      loading: () => const CircularProgressIndicator(),
+                      error: (error, stackTrace) => Text(error.toString()),
+                      data: (AdmobBanner data) => data,
+                    ),
               ],
             ),
           ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:water_breath/app/helpers/pomodoro_status_storage.dart';
@@ -16,6 +17,8 @@ import 'package:water_breath/infrastructor/just_audio_player.dart';
 import '../../domain/entities/timer_entity.dart';
 import '../../domain/value_objects/start_time.dart';
 import '../../domain/value_objects/time.dart';
+import '../helpers/admob_info.dart';
+import '../view/molecules/admob_banner.dart';
 
 typedef OnModeChange = void Function(PomodoroMode mode);
 
@@ -34,6 +37,19 @@ class MainPageVM {
     concentrationTime: Time.minutes(1),
     restTime: Time(20 * 100), // Time.minutes(1),
   );
+
+  final _admobProvider =
+      FutureProvider.family<AdmobBanner, BuildContext>((ref, context) async {
+    TargetPlatform platform = Theme.of(context).platform;
+    bool isRelease = const bool.fromEnvironment('dart.vm.product');
+    await AdmobInfo.initialize(platform, isRelease);
+
+    AdmobInfo admobInfo = await AdmobInfo.getInstance();
+    return AdmobBanner(admobInfo.getBanner());
+  });
+
+  AsyncValue<AdmobBanner> admobBanner(BuildContext context) =>
+      _ref.watch(_admobProvider(context));
 
   void onModeChanged(PomodoroMode mode) {
     _player.onModeChanged(mode);

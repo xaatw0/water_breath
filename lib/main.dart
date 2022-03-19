@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'app/pages/main_page.dart';
 import 'app/pages/router.dart';
 
 void main() {
+  WidgetsFlutterBinding();
+  MobileAds.instance.initialize();
   runApp(ProviderScope(child: MyApp()));
 }
 
