@@ -1,9 +1,11 @@
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:water_breath/app/view/molecules/admob_banner.dart';
 
 import '../helpers/admob_info.dart';
+import '../helpers/app_open_ad_manager.dart';
 import '../view/atoms/black_filter.dart';
 import '../view/atoms/gap.dart';
 import '../view/molecules/play_pause_button.dart';
@@ -29,9 +31,7 @@ class _MainPageState extends ConsumerState<MainPage>
   late final MainPageVM _vm;
   late final Ticker _ticker;
 
-  final AdmobBanner _admobBanner = AdmobBanner(
-    AdmobInfoAndroidDemo().getBanner()..load(),
-  );
+  late final AdmobBanner _admobBanner;
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _MainPageState extends ConsumerState<MainPage>
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 32, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 32, 0),
                   child: MenuHeader(
                     onSetting: () => _vm.onSetting(context),
                     onBack: () => _vm.onBack(context),
@@ -91,6 +91,13 @@ class _MainPageState extends ConsumerState<MainPage>
 
     _vm.setRef(ref);
     _vm.play(DateTime.now());
+
+    AdmobInfo.initialize(Theme.of(context).platform,
+        const bool.fromEnvironment('dart.vm.product'));
+
+    AdmobInfo.getInstance().then((value) {
+      _admobBanner = AdmobBanner(value.getBanner());
+    });
   }
 
   @override
