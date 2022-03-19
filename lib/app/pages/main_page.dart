@@ -72,7 +72,11 @@ class _MainPageState extends ConsumerState<MainPage>
                   onPlayPauseTapped: onPlayPauseTapped,
                 ),
                 Expanded(child: Container()),
-                AdmobBanner(_admobBanner.bannerAd),
+                _vm.admobBanner(context).when(
+                      loading: () => const CircularProgressIndicator(),
+                      error: (error, stackTrace) => Text(error.toString()),
+                      data: (AdmobBanner data) => data,
+                    ),
               ],
             ),
           ),
@@ -91,13 +95,6 @@ class _MainPageState extends ConsumerState<MainPage>
 
     _vm.setRef(ref);
     _vm.play(DateTime.now());
-
-    AdmobInfo.initialize(Theme.of(context).platform,
-        const bool.fromEnvironment('dart.vm.product'));
-
-    AdmobInfo.getInstance().then((value) {
-      _admobBanner = AdmobBanner(value.getBanner());
-    });
   }
 
   @override

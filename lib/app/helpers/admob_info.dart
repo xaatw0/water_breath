@@ -15,7 +15,8 @@ abstract class AdmobInfo {
 
   AdmobInfo._();
 
-  static void initialize(TargetPlatform platform, bool isRelease) {
+  static Future<void> initialize(
+      TargetPlatform platform, bool isRelease) async {
     if (_isInitialized) {
       return;
     }
