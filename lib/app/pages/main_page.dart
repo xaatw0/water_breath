@@ -31,13 +31,11 @@ class _MainPageState extends ConsumerState<MainPage>
   late final MainPageVM _vm;
   late final Ticker _ticker;
 
-  late final AdmobBanner _admobBanner;
-
   @override
   void initState() {
     super.initState();
     _vm = MainPageVM();
-    _ticker = this.createTicker((elapsed) {
+    _ticker = createTicker((elapsed) {
       _vm.onDisplayUpdated(DateTime.now());
     });
     _ticker.start();
