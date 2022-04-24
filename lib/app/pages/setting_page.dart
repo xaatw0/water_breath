@@ -33,7 +33,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
         title: Text(AppLocalizations.of(context).setting), //'設定'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(64),
+        padding: const EdgeInsets.only(top: 32, bottom: 32),
         child: Center(
           child: Column(
             children: [

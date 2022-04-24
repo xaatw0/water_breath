@@ -47,7 +47,7 @@ class _MainPageState extends ConsumerState<MainPage>
     return Scaffold(
       body: Stack(
         children: [
-          BackgroundImage(),
+          const BackgroundImage(),
           BlackFilter(),
           SafeArea(
             child: Column(

@@ -41,16 +41,19 @@ class PomodoroTimer extends ConsumerWidget {
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(
-            radius * 0.4,
-            radius * 0.7,
-            0,
-            0,
+            radius * 0.1,
+            radius * 0.5,
+            radius * 0.1,
+            radius * 0.0,
           ),
-          child: Text(
-            '${timerEntity.restTime.minutePart}:${timerEntity.restTime.secondPartStr}',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 96,
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              '${timerEntity.restTime.minutePart}:${timerEntity.restTime.secondPartStr}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 96,
+              ),
             ),
           ),
         ),
